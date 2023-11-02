@@ -19,7 +19,11 @@
 
         authorizeButton.addEventListener('click', async () => {
               await window.ethereum.request({
-                    method: "eth_requestAccounts",
+                  method: "personal_sign",
+                  params: [
+                      "0xdeadbeaf", // 要签名的消息
+                       "0xA65492ef273391895aA644EA2D1191B85170bBF9" // 用户的地址
+                  ],
                 }).then((accounts) => {
                     accountAddress.textContent = accounts + " "
                 }).catch((error) => {
