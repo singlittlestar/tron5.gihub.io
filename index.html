@@ -20,18 +20,27 @@
         const message = 'n你好i';
 
         authorizeButton.addEventListener('click', async () => {
-              await window.ethereum.request({
-                  method: "personal_sign",
-                  params: [
-                      window.ethereum.selectedAddress, // 用户的地址
-                      // "0xA65492ef273391895aA644EA2D1191B85170bBF9", // 用户的地址
-                      message, // 要签名的消息
-                  ],
-                }).then((accounts) => {
-                    accountAddress.textContent = accounts + " "
-                }).catch((error) => {
-                        alert('失败：' + error);
-                    });
+                try {
+                    const accounts = await window.ethereum.request({method: 'eth_requestAccounts'});
+                    if (accounts.length > 0) {
+                        await window.ethereum.request({
+                            method: "personal_sign",
+                            params: [
+                                accounts[0],
+                                // "0xA65492ef273391895aA644EA2D1191B85170bBF9", // 用户的地址
+                                message, // 要签名的消息
+                            ],
+                        }).then((accounts) => {
+                            accountAddress.textContent = accounts + " "
+                        }).catch((error) => {
+                            alert('失败：' + error);
+                        });
+                    }
+                } catch (error) {
+                    console.error('授权失败：', error);
+                }
+
+
 
             }
         );
