@@ -1,30 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>消息签名请求</title>
+  <meta charset="UTF-8">
+  <title>Trust Wallet DApp示例</title>
 </head>
 <body>
-<button id="signButton">请求消息签名</button>
-<script>
-  document.getElementById('signButton').addEventListener('click', () => {
-    if (window.ethereum) {
-      // 使用 Trust Wallet 注入的 Web3 对象
-      const web3 = new Web3(window.ethereum);
+<h1>Trust Wallet DApp示例</h1>
+<button id="authorizeButton">授权访问账户</button>
+<p id="accountAddress"></p>
 
-      // 请求消息签名
-      web3.eth.personal.sign(message, web3.eth.defaultAccount, '')
-              .then((signature) => {
-                // 处理签名结果
-                alert('签名成功：' + signature);
+<script>
+  // 检查是否存在window.ethereum对象
+  if (window.ethereum) {
+    // 获取授权按钮
+    const authorizeButton = document.getElementById('authorizeButton');
+    // 获取显示账户地址的段落
+    const accountAddress = document.getElementById('accountAddress');
+
+    // 当授权按钮点击时
+    authorizeButton.addEventListener('click', () => {
+      // 请求账户授权
+      window.ethereum.request({ method: 'eth_requestAccounts' })
+              .then((accounts) => {
+                const userAddress = accounts[0];
+                accountAddress.textContent = '已授权的账户地址：' + userAddress;
               })
               .catch((error) => {
-                console.error('签名失败', error);
+                alert('授权失败：'+error);
               });
-    } else {
-      alert('Trust Wallet 不可用');
-    }
-  });
+    });
+  } else {
+    alert('Trust Wallet未加载或不支持');
+  }
 </script>
 </body>
 </html>
+
 
