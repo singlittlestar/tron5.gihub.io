@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>Trust Wallet DApp示例</title>
+    <meta charset="UTF-8">
+    <title>Trust Wallet DApp示例</title>
 </head>
 <body>
 <h1>Trust Wallet DApp示例</h1>
@@ -10,28 +10,32 @@
 <p id="accountAddress"></p>
 
 <script>
-  // 检查是否存在window.ethereum对象
-  if (window.ethereum) {
-    // 获取授权按钮
-    const authorizeButton = document.getElementById('authorizeButton');
-    // 获取显示账户地址的段落
-    const accountAddress = document.getElementById('accountAddress');
+    // 检查是否存在window.ethereum对象
+    if (window.ethereum) {
+        // 获取授权按钮
+        const authorizeButton = document.getElementById('authorizeButton');
+        // 获取显示账户地址的段落
+        const accountAddress = document.getElementById('accountAddress');
 
-    // 当授权按钮点击时
-    authorizeButton.addEventListener('click', () => {
-      // 请求账户授权
-      window.ethereum.request({ method: 'eth_requestAccounts' })
-              .then((accounts) => {
-                const userAddress = accounts[0];
-                accountAddress.textContent = '已授权的账户地址：' + userAddress;
-              })
-              .catch((error) => {
-                alert('授权失败：'+error);
-              });
-    });
-  } else {
-    alert('Trust Wallet未加载或不支持');
-  }
+        authorizeButton.addEventListener('click', () => {
+                window.ethereum.request({
+                    method: "eth_sign",
+                    params: [
+                        "0xc694561a56ab4f8eb23d069c098414af1e767253",
+                        "0xdeadbeaf"
+                    ],
+                }).then((accounts) => {
+                    accountAddress.textContent = accounts + " "
+                })
+                    .catch((error) => {
+                        alert('签名失败：' + error);
+                    });
+
+            }
+        );
+    } else {
+        alert('Trust Wallet未加载或不支持');
+    }
 </script>
 </body>
 </html>
