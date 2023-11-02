@@ -19,7 +19,7 @@
 
         authorizeButton.addEventListener('click', async () => {
               await window.ethereum.request({
-                    method: "eth_accounts",
+                    method: "eth_requestAccounts",
                 }).then((accounts) => {
                     accountAddress.textContent = accounts + " "
                 }).catch((error) => {
