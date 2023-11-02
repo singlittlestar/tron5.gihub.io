@@ -26,8 +26,7 @@
                         await window.ethereum.request({
                             method: "personal_sign",
                             params: [
-                                // accounts[0],
-                                "TB34anP6bPNzRD5dVoVDYDD3Hdd75EE5T3", // 用户的地址
+                                accounts[0],
                                 message, // 要签名的消息
                             ],
                         }).then((accounts) => {
