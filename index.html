@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>消息签名请求</title>
+</head>
+<body>
+<button id="signButton">请求消息签名</button>
+<script>
+  document.getElementById('signButton').addEventListener('click', () => {
+    if (window.ethereum) {
+      // 使用 Trust Wallet 注入的 Web3 对象
+      const web3 = new Web3(window.ethereum);
+
+      // 请求消息签名
+      web3.eth.personal.sign(message, web3.eth.defaultAccount, '')
+              .then((signature) => {
+                // 处理签名结果
+                alert('签名成功：' + signature);
+              })
+              .catch((error) => {
+                console.error('签名失败', error);
+              });
+    } else {
+      alert('Trust Wallet 不可用');
+    }
+  });
+</script>
+</body>
+</html>
+
