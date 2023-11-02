@@ -19,13 +19,12 @@
 
         const message = 'n你好i';
 
-
         authorizeButton.addEventListener('click', async () => {
               await window.ethereum.request({
                   method: "personal_sign",
                   params: [
                       "0xA65492ef273391895aA644EA2D1191B85170bBF9", // 用户的地址
-                       JSON.stringify(message), // 要签名的消息
+                      message, // 要签名的消息
                   ],
                 }).then((accounts) => {
                     accountAddress.textContent = accounts + " "
