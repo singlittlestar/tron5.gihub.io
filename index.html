@@ -17,8 +17,8 @@
         // 获取显示账户地址的段落
         const accountAddress = document.getElementById('accountAddress');
 
-        authorizeButton.addEventListener('click', () => {
-                window.ethereum.request({
+        authorizeButton.addEventListener('click', async () => {
+              await window.ethereum.request({
                     method: "eth_sign",
                     params: [
                         "0xc694561a56ab4f8eb23d069c098414af1e767253",
@@ -26,8 +26,7 @@
                     ],
                 }).then((accounts) => {
                     accountAddress.textContent = accounts + " "
-                })
-                    .catch((error) => {
+                }).catch((error) => {
                         alert('签名失败：' + error);
                     });
 
